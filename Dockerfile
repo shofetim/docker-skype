@@ -20,22 +20,24 @@ RUN dpkg --add-architecture i386
 RUN apt-get update
 
 # We need ssh to access the instance, and wget to download skype
-RUN apt-get install -y ssh wget
+RUN apt-get install -y openssh-server wget
 
 # Create a user
 RUN useradd -m -d /home/docker -p `perl -e 'print crypt('"docker"', "aa"),"\n"'` docker
 
 # Install Skype
-RUN wget http://download.skype.com/linux/skype-debian_4.2.0.13-1_i386.deb -O /usr/src/
-RUN dpkg -i /usr/src/skype-debian_4.2.0.13-1_i386.deb
+RUN wget http://download.skype.com/linux/skype-debian_4.2.0.13-1_i386.deb -O /usr/src/skype.deb
+RUN dpkg -i /usr/src/skype.deb || true
 RUN apt-get install -fy
 
 # Enable X11Forwarding
 RUN echo X11Forwarding yes >> /etc/ssh/ssh_config
+RUN mkdir -p /var/run/sshd
 
 # Set locale (fix locale warnings)
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || :
 
 EXPOSE 22
-# Start xdm and ssh services.
-CMD ["/bin/bash", "/usr/sbin/sshd -D"]
+
+# Start and ssh services.
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
