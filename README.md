@@ -16,6 +16,6 @@ setup.
 4. Get the IP address.
    `ifconfig`
 
-5. Run skype with X forwarded to your normal dekstop
+5. Run skype with X forwarded to your normal desktop
    `ssh -X docker@IP -p PORT skype` password will be docker.
 
