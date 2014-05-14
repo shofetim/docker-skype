@@ -36,11 +36,11 @@ RUN mkdir -p /var/run/sshd
 
 # Set locale (fix locale warnings)
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || :
-RUN echo "America/Los_Angeles" > /etc/timezone
+ENV TZ PST
 
 EXPOSE 22
 
-# Start and ssh services.
-ENTRYPOINT ["/usr/sbin/sshd", "-D"]
+# Start ssh services.
+CMD ["/usr/sbin/sshd", "-D"]
 
 
