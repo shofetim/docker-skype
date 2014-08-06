@@ -26,7 +26,7 @@ RUN apt-get install -y openssh-server wget
 RUN useradd -m -d /home/docker -p `perl -e 'print crypt('"docker"', "aa"),"\n"'` docker
 
 # Install Skype
-RUN wget http://download.skype.com/linux/skype-debian_4.2.0.13-1_i386.deb -O /usr/src/skype.deb
+RUN wget http://download.skype.com/linux/skype-debian_4.3.0.37-1_i386.deb -O /usr/src/skype.deb
 RUN dpkg -i /usr/src/skype.deb || true
 RUN apt-get install -fy
 
@@ -42,5 +42,3 @@ EXPOSE 22
 
 # Start ssh services.
 CMD ["/usr/sbin/sshd", "-D"]
-
-
