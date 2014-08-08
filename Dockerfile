@@ -36,7 +36,8 @@ RUN mkdir -p /var/run/sshd
 
 # Set locale (fix locale warnings)
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || :
-ENV TZ PST
+RUN echo "America/Los_Angeles" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 EXPOSE 22
 
